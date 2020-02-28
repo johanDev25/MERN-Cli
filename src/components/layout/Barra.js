@@ -1,11 +1,25 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
+import authContext from '../../context/autenticacion/authContext'
 
-const Barra = (props) => {
+const Barra = () => {
+  //Extrae la informacion de autenticacion
+  const AuthContext = useContext(authContext);
+  const {usuario, usuarioAutenticado, cerrarSesion} = AuthContext;
+
+  useEffect( () => {
+    usuarioAutenticado();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <header className="app-header">
-     <p className="nombre-usuario">Hola <span>Johan Neira</span></p>
+      {usuario ? <p className="nombre-usuario">Hola <span>{usuario.nombre}</span></p> : null }
+
      <nav className="nav-principal">
-      <a href="#!">Cerrar Sesion</a>
+      <button
+        className="btn btn-blank cerrar-sesion"
+        onClick={() => cerrarSesion()}
+        >Cerrar Sesion</button>
      </nav>
     </header>
   )
